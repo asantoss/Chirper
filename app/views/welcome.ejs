@@ -1,0 +1,51 @@
+<%- include partials/header.ejs %>
+<div class="uploadModal" id="uploadModalContainer" style="display: none;">
+    <span class="close">&times;</span>
+    <div class="uploadForm">
+        <form ref='uploadForm' id='uploadForm' action='/profilePic' method='post' encType="multipart/form-data">
+            <input type="file" name="profilePic" />
+            <input type='submit' value='Upload!' />
+        </form>
+    </div>
+</div>
+<div class="deleteModal" id="deleteModalContainer" style="display: none;">
+    <span class="close">&times;</span>
+    <div class="deleteForm">
+        <h3>Are you sure?</h3>
+        <div>
+            <a href="/deleteProfile">Yes</a>
+            <a href="/welcome">No</a>
+        </div>
+    </div>
+</div>
+<div class="profile">
+    <div class="profilePicture" id="profilePicture" style="background-image: url('<%= photo %>')">
+    </div>
+    <h5>Welcome, <%= name%></h5>
+    <div class="profileMenu">
+        <div class="profileLink" id="newChirp">
+            <a>Chirp</a>
+            <img src="/images/edit-solid.svg" alt="newChirp icon" srcset="">
+        </div>
+        <div class="profileLink">
+            <a href="/myMessages">Messages </a>
+            <img src="/images/sticky-note-regular.svg" alt="" srcset="">
+        </div>
+        <div class="profileLink">
+            <a id="deleteAccount" href="">Delete Account</a>
+            <img src="/images/user-slash-solid.svg" alt="" srcset="">
+        </div>
+        <div class="profileLink">
+            <a id="signout" href="/signout">Sign Out</a>
+            <img src="/images/sign-out-alt-solid.svg" alt="" srcset="">
+        </div>
+    </div>
+</div>
+
+<section class="messages-container">
+    <%- include partials/createMessage.ejs %>
+    <% messages.forEach(message => { %>
+    <%- include('partials/message.ejs', {message: message, today: new Date(), author: message.user.alias, user: user_id, photoURL: photo} )%>
+    <%})%>
+</section>
+<% include partials/footer.ejs%>

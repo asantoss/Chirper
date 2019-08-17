@@ -1,0 +1,20 @@
+<% include partials/header.ejs %>
+<!-- sign up section  -->
+<div class="forms">
+    <form action="/signup" method="POST">
+        <label for="firstName">First Name</label>
+        <input type="text" name="firstName" />
+        <br />
+        <label for="lastMame">Last Name</label>
+        <input type="text" name="lastName" />
+        <br />
+        <label for="alias">Alias</label>
+        <input type="text" name="alias" />
+        <br />
+        <% include partials/login_fields %>
+        <button type="submit">Sign Up</button>
+    </form>
+    <br />
+    <a href="/login">Already have an account?</a>
+</div>
+<% include partials/footer.ejs%>

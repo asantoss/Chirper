@@ -1,0 +1,26 @@
+<div class="message">
+    <div class="messageAuthor">
+        <div class="profilePicture" style="background-image: url('<%= message.user.photos %>');"></div>
+        <span>@<%=author %></span>
+    </div>
+
+    <p class="messageBody"><%= message.body %></p>
+    <div class="messageFooter">
+        <div id="likes">
+            <span>
+                <%= message.likedUsers.length %>
+            </span>
+            <a href="/likeMessage/<%= message.id %>"> <img src="/images/heart-regular.svg" alt="" srcset=""></a>
+            <% if(message.user.id === user){ %>
+        </div>
+        <div>
+            <a href="/deleteMessage/<%= message.id %>"><img src="/images/trash-alt-solid.svg" alt="" srcset=""></a>
+            <% } %>
+        </div>
+        <div>
+            <span class="messageTime">Posted at
+                <%=message.createdAt.toLocaleTimeString('en-US') %>
+            </span>
+        </div>
+    </div>
+</div>

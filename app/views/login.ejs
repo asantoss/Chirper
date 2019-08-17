@@ -1,0 +1,15 @@
+<% include partials/header.ejs %>
+
+<!-- sign up section  -->
+
+<div class="forms">
+    <%= error_message %>
+    <form autocomplete="off" action="/login" method="POST">
+        <% include partials/login_fields %>
+        <button type="submit">Login</button>
+        <p>Don't have an account?</p>
+        <a href="/signup">Sign Up</a>
+    </form>
+</div>
+
+<% include partials/footer.ejs%>
