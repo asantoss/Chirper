@@ -2,14 +2,19 @@ var express = require('express');
 var session = require('express-session');
 var db = require('./models');
 const fs = require('fs')
-const path = require('path')
+const path = require('path');
+const AWS = require('aws-sdk');
 var ejs = require('ejs');
 var bodyParser = require('body-parser');
 var bcrypt = require('bcryptjs');
-const fileUpload = require('express-fileupload')
+const fileUpload = require('express-fileupload');
+require('dotenv').config()
 var app = express();
 
-
+const s3 = new AWS.S3({
+    accessKeyId: process.env.AWS_ACCESS_KEY,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+})
 
 //* initialize connect-session-sequelize
 var SequelizeStore = require('connect-session-sequelize')(session.Store);
@@ -213,14 +218,18 @@ app.post("/profilePic", (req, res, next) => {
     }
     // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
     let profilePic = req.files.profilePic;
-    let filename = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-    let user_id = req.session.user_id
-    // Use the mv() method to place the file somewhere on your server
-    profilePic.mv(`${__dirname}/public/profilePhotos/${filename}.png`, function (err) {
-        if (err)
-            return res.status(500).send(err);
+    let fileName = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    let user_id = req.session.user_id;
+    const params = {
+        Bucket: 'chirperimages',
+        Key: `${fileName}.jpeg`,
+        Body: profilePic.data,
+        ACL: 'public-read'
+    }
+    s3.upload(params, function (s3Err, data) {
+        if (s3Err) throw s3Err
         db.users.findOne({ where: { id: user_id } }).then(user => {
-            user.update({ photos: `/profilePhotos/${filename}.png` }).then(() => {
+            user.update({ photos: `${data.Location}` }).then(() => {
                 res.redirect('/welcome');
             })
         })
