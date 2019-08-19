@@ -161,7 +161,7 @@ app.get('/likeMessage/:id', (req, res, next) => {
 })
 
 
-//! POST routes
+//! POST route
 app.post("/signup", function (req, res, next) {
     if (req.session.user_id) {
         res.redirect('/welcome')
