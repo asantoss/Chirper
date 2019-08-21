@@ -12,6 +12,7 @@ module.exports = {
     "password": process.env.RDS_PASSWORD,
     "database": process.env.RDS_DB_NAME,
     "host": process.env.RDS_HOSTNAME,
+    "logging": false,
     "dialect": "postgres"
     // ! For HEROKU
     // "use_env_variable": "DATABASE_URL",

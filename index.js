@@ -228,6 +228,7 @@ app.post("/profilePic", (req, res, next) => {
     }
     s3.upload(params, function (s3Err, data) {
         if (s3Err) throw s3Err
+        console.log(data.Location)
         db.users.findOne({ where: { id: user_id } }).then(user => {
             user.update({ photos: `${data.Location}` }).then(() => {
                 res.redirect('/welcome');
