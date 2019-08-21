@@ -10,7 +10,7 @@ module.exports = {
   "production": {
     "username": process.env.RDS_USERNAME,
     "password": process.env.RDS_PASSWORD,
-    "database": "aa19m8ws8ueib14",
+    "database": process.env.RDS_DB_NAME,
     "host": process.env.RDS_HOSTNAME,
     "dialect": "postgres"
     // ! For HEROKU
